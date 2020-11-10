@@ -1,6 +1,26 @@
 .App {
+  font-family: sans-serif;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.SliderContainer {
+  padding: 30px;
+  width: 300px;
+  background: #eee;
+}
+
+.SliderContainer_header {
+  font-size: 1.2rem;
+  margin: 0 0 30px 0;
+}
+
+.SliderContainer_body {
+  padding: 30px 0 0 0 ;
+}
+
+.mb-10 {
+  margin-bottom: 10px;
 }

@@ -7,7 +7,6 @@ import './Slider.css';
 class Slider extends React.Component {
     constructor(props) {
         super(props);
-
         this.activeHandle = null;
         this.ref = React.createRef();
     }
@@ -64,7 +63,7 @@ class Slider extends React.Component {
      * @returns {number[]}
      */
     get handlePositions() {
-        return this.props.value.map(val => val / this.rangeSize * 100);
+        return this.props.values.map(val => val / this.rangeSize * 100);
     }
 
     // Component methods
@@ -89,10 +88,10 @@ class Slider extends React.Component {
                 value = valueAsPercent * this.rangeSize;
             }
 
-            let newValue = [...this.props.value];
-            newValue[this.activeHandle] = value;
+            let newValues = [...this.props.values];
+            newValues[this.activeHandle] = value;
 
-            onChange(newValue.sort((a, b) => a - b));
+            onChange(newValues.sort((a, b) => a - b));
         }
     }
 

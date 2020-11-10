@@ -4,10 +4,6 @@
     --handle-color: var(--rail-color);
 }
 
-.SliderContainer {
-    width: 300px;
-}
-
 .Slider {
     display: flex;
     justify-content: stretch;
