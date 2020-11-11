@@ -43,7 +43,17 @@ function App() {
         <div className="App">
             <div className="SliderContainer">
                 <h1 className="SliderContainer_header">Multi-Handled Slider Demo:</h1>
-                <Slider values={range} min={min} max={max} onChange={setRange} />
+                <Slider
+                    values={range}
+                    min={min}
+                    max={max}
+                    knobs={[
+                        { position: 0, type: 'major' },
+                        { position: 50, type: 'minor' },
+                        { position: 100, type: 'major' }
+                    ]}
+                    onChange={setRange}
+                />
                 <div className="SliderContainer_body">
                     <hr/>
                     <div className="mb-10"><b>values</b> = [</div>

@@ -1,11 +1,11 @@
 import React from 'react';
 
-function SliderRail({ handlePositions }) {
-    const [ leftPos, rightPos ] = handlePositions;
+function SliderRail({ coloredRailPositions }) {
+    const [ startPos, endPos ] = coloredRailPositions;
     return (
         <div className="Slider_rail">
             <div className="Slider_rail Slider_rail-colored"
-                 style={{ left: `${leftPos}%`, right: `${100 - rightPos}%` }}
+                 style={{ left: `${startPos}%`, right: `${100 - endPos}%` }}
             > </div>
         </div>
     );

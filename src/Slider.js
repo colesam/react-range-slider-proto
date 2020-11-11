@@ -66,6 +66,23 @@ class Slider extends React.Component {
         return this.props.values.map(val => val / this.rangeSize * 100);
     }
 
+    /**
+     * Start and stop positions of the colored rail.
+     * @returns {number[]} - [ startPos, endPos ]
+     */
+    get coloredRailPositions() {
+        if (this.handlePositions.length === 1) {
+            return [ 0, this.handlePositions[0] ];
+        } else if (this.handlePositions.length > 1) {
+            return [
+                this.handlePositions[0],
+                this.handlePositions.slice(-1)
+            ];
+        } else {
+            return [ 0, 0 ];
+        }
+    }
+
     // Component methods
 
     drag(cursorX) {
@@ -110,18 +127,27 @@ class Slider extends React.Component {
     }
 
     render() {
+        const handles = this.handlePositions.map((pos, handleIndex) => (
+            <Handle
+                position={pos}
+                onClickStart={() => this.setActiveHandle(handleIndex)}
+                key={`handle_${pos}`}
+            />
+        ));
+
+        const knobs = this.props.knobs.map(({ position, type }) => (
+            <Knob
+                position={position}
+                type={type}
+                coloredRailPositions={this.coloredRailPositions}
+            />
+        ));
+
         return (
             <div className="Slider" ref={this.ref}>
-                <SliderRail handlePositions={this.handlePositions} />
-                <Handle position={this.handlePositions[0]}
-                        onClickStart={() => this.setActiveHandle(0)}
-                />
-                <Handle position={this.handlePositions[1]}
-                        onClickStart={() => this.setActiveHandle(1)}
-                />
-                <Knob position={0} handlePositions={this.handlePositions} />
-                <Knob position={50} handlePositions={this.handlePositions} type="minor" />
-                <Knob position={100} handlePositions={this.handlePositions} />
+                <SliderRail coloredRailPositions={this.coloredRailPositions} />
+                {handles}
+                {knobs}
             </div>
         );
     }
