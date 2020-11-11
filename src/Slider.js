@@ -7,8 +7,8 @@ import './Slider.css';
 class Slider extends React.Component {
     constructor(props) {
         super(props);
-        this.activeHandle = null;
         this.ref = React.createRef();
+        this.state = { activeHandle: null };
     }
 
     // Lifecycle hooks
@@ -86,7 +86,7 @@ class Slider extends React.Component {
     // Component methods
 
     drag(cursorX) {
-        if (this.activeHandle !== null) {
+        if (this.state.activeHandle !== null) {
             const { min, max, onChange } = this.props
 
             // Convert the cursor's X position from pixels to a percentage (decimal form) of the slider's width
@@ -106,7 +106,7 @@ class Slider extends React.Component {
             }
 
             let newValues = [...this.props.values];
-            newValues[this.activeHandle] = value;
+            newValues[this.state.activeHandle] = value;
 
             onChange(newValues.sort((a, b) => a - b));
         }
@@ -114,9 +114,9 @@ class Slider extends React.Component {
 
     // Event handlers
 
-    setActiveHandle = handle => this.activeHandle = handle;
+    setActiveHandle = handleIndex => this.setState({ activeHandle: handleIndex });
 
-    resetActiveHandle = () => this.activeHandle = null;
+    resetActiveHandle = () => this.setState({ activeHandle: null });
 
     mouseMoveHandler = e => this.drag(e.pageX);
 
@@ -130,6 +130,7 @@ class Slider extends React.Component {
         const handles = this.handlePositions.map((pos, handleIndex) => (
             <Handle
                 position={pos}
+                isActive={this.state.activeHandle === handleIndex}
                 onClickStart={() => this.setActiveHandle(handleIndex)}
                 key={`handle_${pos}`}
             />
