@@ -32,15 +32,23 @@
 }
 
 .Slider_knob {
-    height: 14px;
-    width: 4px;
     border-radius: 50px;
     background: var(--rail-default-color);
 }
 
-.Slider_knob-minor {
+.Slider_knob-major {
+    height: 14px;
+    width: 4px;
+}
+
+.Slider_knob-normal {
     width: 4px;
     height: 12px;
+}
+
+.Slider_knob-minor {
+    width: 3px;
+    height: 10px;
 }
 
 .Slider_knob-colored {

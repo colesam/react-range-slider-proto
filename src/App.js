@@ -49,7 +49,9 @@ function App() {
                     max={max}
                     knobs={[
                         { position: 0, type: 'major' },
-                        { position: 50, type: 'minor' },
+                        { position: 25, type: 'minor' },
+                        { position: 50, type: 'normal' },
+                        { position: 75, type: 'minor' },
                         { position: 100, type: 'major' }
                     ]}
                     onChange={setRange}

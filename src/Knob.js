@@ -5,7 +5,7 @@ function Knob({ position, type, coloredRailPositions }) {
     const [ startPos, endPos ] = coloredRailPositions;
     const colored = startPos <= position && endPos >= position;
     const modifierClasses = [
-        (type === 'minor') ? 'Slider_knob-minor' : '',
+        `Slider_knob-${type}`,
         (colored) ? 'Slider_knob-colored' : ''
     ].join(' ');
 
