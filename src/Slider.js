@@ -68,22 +68,34 @@ class Slider extends React.Component {
 
     /**
      * Start and stop positions of the colored rail.
-     * @returns {number[]} - [ startPos, endPos ]
+     * @returns {number[]|null} - [ startPos, endPos ]
      */
     get coloredRailPositions() {
+        if (!this.props.coloredRail || this.handlePositions.length < 1) {
+            return null;
+        }
+
         if (this.handlePositions.length === 1) {
             return [ 0, this.handlePositions[0] ];
-        } else if (this.handlePositions.length > 1) {
+        } else {
             return [
                 this.handlePositions[0],
                 this.handlePositions.slice(-1)
             ];
-        } else {
-            return [ 0, 0 ];
         }
     }
 
     // Component methods
+
+    knobIsColored(position) {
+        if (this.coloredRailPositions === null) {
+            return false;
+        }
+
+        const [ startPos, endPos ] = this.coloredRailPositions;
+
+        return startPos <= position && endPos >= position;
+    }
 
     drag(cursorX) {
         if (this.state.activeHandle !== null) {
@@ -127,12 +139,12 @@ class Slider extends React.Component {
     }
 
     render() {
-        const handles = this.handlePositions.map((pos, handleIndex) => (
+        const handles = this.handlePositions.map((position, handleIndex) => (
             <Handle
-                position={pos}
+                position={position}
                 isActive={this.state.activeHandle === handleIndex}
                 onClickStart={() => this.setActiveHandle(handleIndex)}
-                key={`handle_${pos}`}
+                key={`handle_${position}`}
             />
         ));
 
@@ -140,7 +152,8 @@ class Slider extends React.Component {
             <Knob
                 position={position}
                 type={type}
-                coloredRailPositions={this.coloredRailPositions}
+                isColored={this.knobIsColored(position)}
+                key={`knob_${position}`}
             />
         ));
 
@@ -152,6 +165,10 @@ class Slider extends React.Component {
             </div>
         );
     }
+}
+
+Slider.defaultProps = {
+    coloredRail: true
 }
 
 export default Slider;
