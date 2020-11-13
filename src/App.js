@@ -2,14 +2,13 @@ import React, {useState} from 'react';
 import './App.css';
 import Slider from "./Slider";
 
-/**
- * TODO: Handle snap-to knobs
- */
 function App() {
     const min = 0;
     const max = 150;
+
     const [range, setRange] = useState([25, 60]);
-    const [coloredRail, setColoredRail] = useState(true);
+    const [coloredRailEnabled, setColoredRailEnabled] = useState(true);
+    const [snapToEnabled, setSnapToEnabled] = useState(true);
 
     const valueChangeHandler = (newValue, index) => {
         setRange(range.map(
@@ -37,6 +36,24 @@ function App() {
         </div>
     ));
 
+    const knobs = [
+        { position: 0, type: 'major' },
+        { position: 25, type: 'minor' },
+        { position: 50, type: 'normal' },
+        { position: 75, type: 'minor' },
+        { position: 100, type: 'major' },
+    ].map(
+        knob => {
+            if (snapToEnabled) {
+                return {
+                    ...knob,
+                    snapToThreshold: knob.type === 'major' ? 3 : 1
+                }
+            }
+            return knob;
+        }
+    );
+
     return (
         <div className="App">
             <div className="SliderContainer">
@@ -45,33 +62,40 @@ function App() {
                     values={range}
                     min={min}
                     max={max}
-                    knobs={[
-                        { position: 0, type: 'major' },
-                        { position: 25, type: 'minor' },
-                        { position: 50, type: 'normal' },
-                        { position: 75, type: 'minor' },
-                        { position: 100, type: 'major' }
-                    ]}
-                    coloredRail={coloredRail}
+                    knobs={knobs}
+                    coloredRail={coloredRailEnabled}
                     onChange={setRange}
                 />
                 <div className="SliderContainer_body">
                     <hr/>
+
                     <div className="mb-10"><b>values</b> = [</div>
                     {valueInputs}
                     <div className="mb-10">]</div>
+
                     <div className="mb-10">
                         <button style={{ marginRight: '10px' }} onClick={addValueHandler}>Add Value</button>
                         <button onClick={removeValueHandler}>Remove Value</button>
                     </div>
+
                     <div>
                         <input
                             type="checkbox"
                             id="enableColoredRail"
-                            checked={coloredRail}
-                            onChange={() => setColoredRail(!coloredRail)}
+                            checked={coloredRailEnabled}
+                            onChange={() => setColoredRailEnabled(!coloredRailEnabled)}
                         />
                         <label htmlFor="enableColoredRail">Colored Rail Enabled</label>
+                    </div>
+
+                    <div>
+                        <input
+                            type="checkbox"
+                            id="enableSnapTo"
+                            checked={snapToEnabled}
+                            onChange={() => setSnapToEnabled(!snapToEnabled)}
+                        />
+                        <label htmlFor="enableSnapTo">Snap To Enabled</label>
                     </div>
                 </div>
             </div>

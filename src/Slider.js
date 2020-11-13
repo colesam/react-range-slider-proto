@@ -85,6 +85,12 @@ class Slider extends React.Component {
         }
     }
 
+    get snapToThresholds() {
+        return this.props.knobs
+            .filter(({ snapToThreshold }) => !isNaN(snapToThreshold) && snapToThreshold > 0)
+            .map(({ position, snapToThreshold }) => [ position, snapToThreshold ]);
+    }
+
     // Component methods
 
     knobIsColored(position) {
@@ -101,20 +107,28 @@ class Slider extends React.Component {
         if (this.state.activeHandle !== null) {
             const { min, max, onChange } = this.props
 
-            // Convert the cursor's X position from pixels to a percentage (decimal form) of the slider's width
-            const valueAsPercent = (cursorX - this.sliderCoordinates.left) / this.sliderLength;
+            // Convert the cursor's X position from pixels to a percentage of the slider's width
+            let valueAsPercent = (cursorX - this.sliderCoordinates.left) / this.sliderLength * 100;
+
+            this.snapToThresholds.forEach(([ position, threshold ]) => {
+                const lowerBound = position - threshold;
+                const upperBound = position + threshold;
+                if (valueAsPercent >= lowerBound && valueAsPercent <= upperBound) {
+                    valueAsPercent = position;
+                }
+            });
 
             let value;
 
             if (valueAsPercent < 0) {
                 // If slider goes below 0%, set it to min
                 value = min;
-            } else if (valueAsPercent > 1) {
+            } else if (valueAsPercent > 100) {
                 // If slider exceeds 100%, set it to the max
                 value = max;
             } else {
                 // Multiply percentage by max-min range to convert to true numeric value
-                value = valueAsPercent * this.rangeSize;
+                value = (valueAsPercent / 100) * this.rangeSize;
             }
 
             let newValues = [...this.props.values];
