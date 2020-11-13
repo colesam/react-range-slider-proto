@@ -2,6 +2,9 @@ import React, {useState} from 'react';
 import './App.css';
 import Slider from "./Slider";
 
+/**
+ * TODO: Fix collision related bugs and make them dynamic
+ */
 function App() {
     const min = 0;
     const max = 150;
@@ -9,6 +12,7 @@ function App() {
     const [range, setRange] = useState([25, 60]);
     const [coloredRailEnabled, setColoredRailEnabled] = useState(true);
     const [snapToEnabled, setSnapToEnabled] = useState(true);
+    const [collisionsEnabled, setCollisionsEnabled] = useState(true);
 
     const valueChangeHandler = (newValue, index) => {
         setRange(range.map(
@@ -96,6 +100,16 @@ function App() {
                             onChange={() => setSnapToEnabled(!snapToEnabled)}
                         />
                         <label htmlFor="enableSnapTo">Snap To Enabled</label>
+                    </div>
+
+                    <div>
+                        <input
+                            type="checkbox"
+                            id="enableSnapTo"
+                            checked={collisionsEnabled}
+                            onChange={() => setCollisionsEnabled(!collisionsEnabled)}
+                        />
+                        <label htmlFor="enableSnapTo">Handle Collisions Enabled</label>
                     </div>
                 </div>
             </div>
