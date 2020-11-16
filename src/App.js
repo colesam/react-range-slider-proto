@@ -9,7 +9,7 @@ function App() {
     const min = 0;
     const max = 150;
 
-    const [range, setRange] = useState([25, 60]);
+    const [range, setRange] = useState([ 25, 60 ]);
     const [coloredRailEnabled, setColoredRailEnabled] = useState(true);
     const [snapToEnabled, setSnapToEnabled] = useState(true);
     const [collisionsEnabled, setCollisionsEnabled] = useState(true);
@@ -68,6 +68,7 @@ function App() {
                     max={max}
                     knobs={knobs}
                     coloredRail={coloredRailEnabled}
+                    collisionsEnabled={collisionsEnabled}
                     onChange={setRange}
                 />
                 <div className="SliderContainer_body">
@@ -105,7 +106,7 @@ function App() {
                     <div>
                         <input
                             type="checkbox"
-                            id="enableSnapTo"
+                            id="enableCollisions"
                             checked={collisionsEnabled}
                             onChange={() => setCollisionsEnabled(!collisionsEnabled)}
                         />

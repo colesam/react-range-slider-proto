@@ -4,6 +4,10 @@ import Knob from "./Knob";
 import SliderRail from "./SliderRail";
 import './Slider.css';
 
+function sortAsc(numArr) {
+    return [...numArr].sort((a, b) => a - b);
+}
+
 class Slider extends React.Component {
     constructor(props) {
         super(props);
@@ -78,9 +82,10 @@ class Slider extends React.Component {
         if (this.handlePositions.length === 1) {
             return [ 0, this.handlePositions[0] ];
         } else {
+            const sortedHandlePositions = sortAsc(this.handlePositions);
             return [
-                this.handlePositions[0],
-                this.handlePositions.slice(-1)
+                sortedHandlePositions[0],
+                sortedHandlePositions.slice(-1)
             ];
         }
     }
@@ -132,9 +137,14 @@ class Slider extends React.Component {
             }
 
             let newValues = [...this.props.values];
+
             newValues[this.state.activeHandle] = value;
 
-            onChange(newValues.sort((a, b) => a - b));
+            if (this.props.collisionsEnabled) {
+                newValues = sortAsc(newValues);
+            }
+
+            onChange(newValues);
         }
     }
 
@@ -158,7 +168,7 @@ class Slider extends React.Component {
                 position={position}
                 isActive={this.state.activeHandle === handleIndex}
                 onClickStart={() => this.setActiveHandle(handleIndex)}
-                key={`handle_${position}`}
+                key={`handle_${handleIndex}`}
             />
         ));
 
