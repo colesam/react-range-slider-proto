@@ -1,7 +1,7 @@
 import React from 'react';
-import Handle from './Handle';
-import Knob from "./Knob";
-import SliderRail from "./SliderRail";
+import Handle from './render/Handle';
+import Knob from "./render/Knob";
+import SliderRail from "./render/SliderRail";
 import {sortAsc} from './utils';
 
 class Slider extends React.Component {

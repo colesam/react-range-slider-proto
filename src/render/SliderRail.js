@@ -2,6 +2,7 @@ import React from 'react';
 
 function SliderRail({ coloredRailPositions }) {
     let coloredRail = null;
+
     if (coloredRailPositions !== null) {
         const [ startPos, endPos ] = coloredRailPositions;
         coloredRail = (
