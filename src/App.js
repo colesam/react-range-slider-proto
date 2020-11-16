@@ -1,38 +1,37 @@
 import React, {useState} from 'react';
-import './App.css';
 import Slider from "./Slider";
 
-/**
- * TODO: Fix collision related bugs and make them dynamic
- */
 function App() {
     const min = 0;
     const max = 150;
 
-    const [range, setRange] = useState([ 25, 60 ]);
+    // State hooks
+    const [values, setValues] = useState([ 25, 60 ]);
     const [coloredRailEnabled, setColoredRailEnabled] = useState(true);
     const [snapToEnabled, setSnapToEnabled] = useState(true);
     const [collisionsEnabled, setCollisionsEnabled] = useState(true);
 
+    // Event handlers
     const valueChangeHandler = (newValue, index) => {
-        setRange(range.map(
+        setValues(values.map(
             (val, i) => i === index ? newValue : val
         ));
     }
 
     const addValueHandler = () => {
-        setRange([ ...range, max ]);
+        setValues([ ...values, max ]);
     }
 
     const removeValueHandler = () => {
-        setRange(range.slice(0, range.length - 1));
+        setValues(values.slice(0, values.length - 1));
     }
 
-    const valueInputs = range.map((value, i) => (
+    // Computed values
+    const valueInputs = values.map((value, i) => (
         <div key={i}>
             <input
                 type="text"
-                style={{ width: 100, margin: '0 10px 10px 20px' }}
+                style={{ width: 100, margin: '0 5px 10px 20px' }}
                 value={value}
                 onChange={e => valueChangeHandler(e.target.value, i)}
             />
@@ -40,36 +39,24 @@ function App() {
         </div>
     ));
 
-    const knobs = [
-        { position: 0, type: 'major' },
-        { position: 25, type: 'minor' },
-        { position: 50, type: 'normal' },
-        { position: 75, type: 'minor' },
-        { position: 100, type: 'major' },
-    ].map(
-        knob => {
-            if (snapToEnabled) {
-                return {
-                    ...knob,
-                    snapToThreshold: knob.type === 'major' ? 3 : 1
-                }
-            }
-            return knob;
-        }
-    );
-
     return (
         <div className="App">
             <div className="SliderContainer">
-                <h1 className="SliderContainer_header">Multi-Handled Slider Demo:</h1>
+                <h1 className="SliderContainer_header">Demo:</h1>
                 <Slider
-                    values={range}
+                    values={values}
                     min={min}
                     max={max}
-                    knobs={knobs}
+                    knobs={[
+                        { position: 0, type: 'major', snapToThreshold: 3 },
+                        { position: 25, type: 'minor', snapToThreshold: 1 },
+                        { position: 50, type: 'normal', snapToThreshold: 1 },
+                        { position: 75, type: 'minor', snapToThreshold: 1 },
+                        { position: 100, type: 'major', snapToThreshold: 3 },
+                    ]}
                     coloredRail={coloredRailEnabled}
                     collisionsEnabled={collisionsEnabled}
-                    onChange={setRange}
+                    onChange={setValues}
                 />
                 <div className="SliderContainer_body">
                     <hr/>

@@ -1,5 +1,4 @@
 import React from 'react';
-import './Slider.css';
 
 function Knob({ position, type, isColored }) {
     const modifierClasses = [

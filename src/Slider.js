@@ -2,11 +2,7 @@ import React from 'react';
 import Handle from './Handle';
 import Knob from "./Knob";
 import SliderRail from "./SliderRail";
-import './Slider.css';
-
-function sortAsc(numArr) {
-    return [...numArr].sort((a, b) => a - b);
-}
+import {sortAsc} from './utils';
 
 class Slider extends React.Component {
     constructor(props) {
@@ -90,6 +86,11 @@ class Slider extends React.Component {
         }
     }
 
+    /**
+     * Returns an array of tuples representing positions that can be snapped to (e.g. 25%) and the distance in
+     * percentage points that a handle needs to be away from that position in order to snap.
+     * @returns {number[][]} - [ position, snapToThreshold ]
+     */
     get snapToThresholds() {
         return this.props.knobs
             .filter(({ snapToThreshold }) => !isNaN(snapToThreshold) && snapToThreshold > 0)
@@ -98,6 +99,10 @@ class Slider extends React.Component {
 
     // Component methods
 
+    /**
+     * @param {number} position
+     * @returns {boolean}
+     */
     knobIsColored(position) {
         if (this.coloredRailPositions === null) {
             return false;
@@ -108,32 +113,47 @@ class Slider extends React.Component {
         return startPos <= position && endPos >= position;
     }
 
+    /**
+     * Loop over snapping positions/thresholds to determine if a position needs to snap to a new position.
+     * @param {number} position
+     * @returns {number} - new position
+     */
+    calculateSnappedPosition(position) {
+        this.snapToThresholds.forEach(([ snapToPos, threshold ]) => {
+            const lowerBound = snapToPos - threshold;
+            const upperBound = snapToPos + threshold;
+            if (position >= lowerBound && position <= upperBound) {
+                position = snapToPos;
+            }
+        });
+
+        return position;
+    }
+
+    /**
+     * Calculate the new value from a dragged handle's position and call the `onChange` prop.
+     * @param {number} cursorX - the x position (in pixels) of the mouse
+     */
     drag(cursorX) {
         if (this.state.activeHandle !== null) {
             const { min, max, onChange } = this.props
 
             // Convert the cursor's X position from pixels to a percentage of the slider's width
-            let valueAsPercent = (cursorX - this.sliderCoordinates.left) / this.sliderLength * 100;
+            let currentPosition = (cursorX - this.sliderCoordinates.left) / this.sliderLength * 100;
 
-            this.snapToThresholds.forEach(([ position, threshold ]) => {
-                const lowerBound = position - threshold;
-                const upperBound = position + threshold;
-                if (valueAsPercent >= lowerBound && valueAsPercent <= upperBound) {
-                    valueAsPercent = position;
-                }
-            });
+            currentPosition = this.calculateSnappedPosition(currentPosition);
 
             let value;
 
-            if (valueAsPercent < 0) {
+            if (currentPosition < 0) {
                 // If slider goes below 0%, set it to min
                 value = min;
-            } else if (valueAsPercent > 100) {
+            } else if (currentPosition > 100) {
                 // If slider exceeds 100%, set it to the max
                 value = max;
             } else {
                 // Multiply percentage by max-min range to convert to true numeric value
-                value = (valueAsPercent / 100) * this.rangeSize;
+                value = (currentPosition / 100) * this.rangeSize;
             }
 
             let newValues = [...this.props.values];
@@ -192,7 +212,8 @@ class Slider extends React.Component {
 }
 
 Slider.defaultProps = {
-    coloredRail: true
+    coloredRail: true,
+    collisionsEnabled: true
 }
 
 export default Slider;
