@@ -63,7 +63,7 @@ class Slider extends React.Component {
      * @returns {number[]}
      */
     get handlePositions() {
-        return this.props.values.map(val => val / this.rangeSize * 100);
+        return this.props.value.map(val => val / this.rangeSize * 100);
     }
 
     /**
@@ -156,15 +156,15 @@ class Slider extends React.Component {
                 value = (currentPosition / 100) * this.rangeSize;
             }
 
-            let newValues = [...this.props.values];
+            let newValue = [...this.props.value];
 
-            newValues[this.state.activeHandle] = value;
+            newValue[this.state.activeHandle] = value;
 
             if (this.props.collisionsEnabled) {
-                newValues = sortAsc(newValues);
+                newValue = sortAsc(newValue);
             }
 
-            onChange(newValues);
+            onChange(newValue);
         }
     }
 

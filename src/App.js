@@ -6,28 +6,28 @@ function App() {
     const max = 150;
 
     // State hooks
-    const [values, setValues] = useState([ 25, 60 ]);
+    const [value, setValue] = useState([ 25, 60 ]);
     const [coloredRailEnabled, setColoredRailEnabled] = useState(true);
     const [snapToEnabled, setSnapToEnabled] = useState(true);
     const [collisionsEnabled, setCollisionsEnabled] = useState(true);
 
     // Event handlers
     const valueChangeHandler = (newValue, index) => {
-        setValues(values.map(
+        setValue(value.map(
             (val, i) => i === index ? newValue : val
         ));
     }
 
     const addValueHandler = () => {
-        setValues([ ...values, max ]);
+        setValue([ ...value, max ]);
     }
 
     const removeValueHandler = () => {
-        setValues(values.slice(0, values.length - 1));
+        setValue(value.slice(0, value.length - 1));
     }
 
-    // Computed values
-    const valueInputs = values.map((value, i) => (
+    // Computed value
+    const valueInputs = value.map((value, i) => (
         <div key={i}>
             <input
                 type="text"
@@ -44,7 +44,7 @@ function App() {
             <div className="SliderContainer">
                 <h1 className="SliderContainer_header">Demo:</h1>
                 <Slider
-                    values={values}
+                    value={value}
                     min={min}
                     max={max}
                     knobs={[
@@ -56,12 +56,12 @@ function App() {
                     ]}
                     coloredRail={coloredRailEnabled}
                     collisionsEnabled={collisionsEnabled}
-                    onChange={setValues}
+                    onChange={setValue}
                 />
                 <div className="SliderContainer_body">
                     <hr/>
 
-                    <div className="mb-10"><b>values</b> = [</div>
+                    <div className="mb-10"><b>value</b> = [</div>
                     {valueInputs}
                     <div className="mb-10">]</div>
 
