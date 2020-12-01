@@ -57,13 +57,12 @@ class Slider extends React.Component {
     }
 
     /**
-     * A handle's position is just its value converted to a percentage (non-decimal) of the slider. If a slider ranges
-     * from 0 to 200 and has a value of `[ 50, 125 ]`, then the handlePositions would be `[ 25, 62.5 ]`. This are
-     * eventually converted to CSS percentages to position the handles correctly.
+     * The handle's positions are a percentage distance down the rail (using css `left: X%`). Need to scale the value
+     * from a range of min/max to 0/1 and multiply by 100 for a percent.
      * @returns {number[]}
      */
     get handlePositions() {
-        return this.props.value.map(val => val / this.rangeSize * 100);
+        return this.props.value.map(val => ((val - this.props.min) / this.rangeSize * 100));
     }
 
     /**
@@ -152,8 +151,8 @@ class Slider extends React.Component {
                 // If slider exceeds 100%, set it to the max
                 value = max;
             } else {
-                // Multiply percentage by max-min range to convert to true numeric value
-                value = (currentPosition / 100) * this.rangeSize;
+                // Convert from percentage-based position back to true value
+                value = ((currentPosition / 100) * this.rangeSize) + min;
             }
 
             let newValue = [...this.props.value];
