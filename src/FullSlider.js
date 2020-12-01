@@ -1,10 +1,10 @@
 import React from 'react';
 import Handle from './render/Handle';
 import Knob from "./render/Knob";
-import SliderRail from "./render/SliderRail";
+import Rail from "./render/Rail";
 import {sortAsc} from './utils';
 
-class Slider extends React.Component {
+class FullSlider extends React.Component {
     constructor(props) {
         super(props);
         this.ref = React.createRef();
@@ -135,31 +135,31 @@ class Slider extends React.Component {
      */
     drag(cursorX) {
         if (this.state.activeHandle !== null) {
-            const { min, max, onChange } = this.props
+            const { value, min, max, collisionsEnabled, onChange } = this.props;
 
             // Convert the cursor's X position from pixels to a percentage of the slider's width
             let currentPosition = (cursorX - this.sliderCoordinates.left) / this.sliderLength * 100;
 
             currentPosition = this.calculateSnappedPosition(currentPosition);
 
-            let value;
+            let handleValue;
 
             if (currentPosition < 0) {
                 // If slider goes below 0%, set it to min
-                value = min;
+                handleValue = min;
             } else if (currentPosition > 100) {
                 // If slider exceeds 100%, set it to the max
-                value = max;
+                handleValue = max;
             } else {
                 // Convert from percentage-based position back to true value
-                value = ((currentPosition / 100) * this.rangeSize) + min;
+                handleValue = ((currentPosition / 100) * this.rangeSize) + min;
             }
 
-            let newValue = [...this.props.value];
+            let newValue = [...value];
 
-            newValue[this.state.activeHandle] = value;
+            newValue[this.state.activeHandle] = handleValue;
 
-            if (this.props.collisionsEnabled) {
+            if (collisionsEnabled) {
                 newValue = sortAsc(newValue);
             }
 
@@ -202,7 +202,7 @@ class Slider extends React.Component {
 
         return (
             <div className="Slider" ref={this.ref}>
-                <SliderRail coloredRailPositions={this.coloredRailPositions} />
+                <Rail coloredRailPositions={this.coloredRailPositions} />
                 {handles}
                 {knobs}
             </div>
@@ -210,9 +210,9 @@ class Slider extends React.Component {
     }
 }
 
-Slider.defaultProps = {
+FullSlider.defaultProps = {
     coloredRail: true,
     collisionsEnabled: true
 }
 
-export default Slider;
+export default FullSlider;

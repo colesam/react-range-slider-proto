@@ -1,3 +1,1 @@
-export function sortAsc(numArr) {
-    return [...numArr].sort((a, b) => a - b);
-}
+export const sortAsc = numArr => [...numArr].sort((a, b) => a - b);

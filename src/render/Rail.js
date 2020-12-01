@@ -1,6 +1,6 @@
 import React from 'react';
 
-function SliderRail({ coloredRailPositions }) {
+function Rail({ coloredRailPositions }) {
     let coloredRail = null;
 
     if (coloredRailPositions !== null) {
@@ -19,4 +19,4 @@ function SliderRail({ coloredRailPositions }) {
     );
 }
 
-export default SliderRail;
+export default Rail;

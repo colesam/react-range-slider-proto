@@ -1,6 +1,6 @@
 import React from 'react';
 import Handle from './render/Handle';
-import SliderRail from "./render/SliderRail";
+import Rail from "./render/Rail";
 
 class Slider extends React.Component {
     constructor(props) {
@@ -40,7 +40,7 @@ class Slider extends React.Component {
 
         return (
             <div className="Slider">
-                <SliderRail />
+                <Rail />
                 {handles}
             </div>
         );

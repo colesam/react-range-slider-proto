@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import Slider from "./Slider";
+import BasicSlider from "./BasicSlider";
 
 function BasicDemo() {
     const min = 50;
@@ -12,7 +12,7 @@ function BasicDemo() {
         <div className="Demo BasicDemo">
             <div className="SliderContainer">
 
-                <Slider
+                <BasicSlider
                     value={value}
                     min={min}
                     max={max}
