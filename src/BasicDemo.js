@@ -1,10 +1,7 @@
 import React, {useState} from 'react';
-import BasicSlider from "./BasicSlider";
+import Slider from "./BasicSlider";
 
 function BasicDemo() {
-    const min = 50;
-    const max = 150;
-
     // State hooks
     const [value, setValue] = useState([ 50, 100 ]);
 
@@ -12,10 +9,10 @@ function BasicDemo() {
         <div className="Demo BasicDemo">
             <div className="SliderContainer">
 
-                <BasicSlider
+                <Slider
                     value={value}
-                    min={min}
-                    max={max}
+                    min={50}
+                    max={150}
                 />
 
             </div>
