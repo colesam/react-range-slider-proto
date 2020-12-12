@@ -132,7 +132,7 @@ class Slider extends React.Component {
         const { activeHandleIndex } = this.state;
 
         if (activeHandleIndex !== null) {
-            const { values, min, max, collisionsEnabled, onChange } = this.props;
+            const { values, min, max, collisions, onChange } = this.props;
 
             // Convert the cursor's X position from pixels to a percentage of the slider's width
             let cursorPosition = (cursorX - this.sliderCoordinates.left) / this.sliderPixelLength * 100;
@@ -154,7 +154,7 @@ class Slider extends React.Component {
             newValues[activeHandleIndex] = cursorValue;
 
             // If collisions are enabled, sort the values in ascending order
-            if (collisionsEnabled) {
+            if (collisions) {
                 newValues = sortAsc(newValues);
             }
 
@@ -208,7 +208,7 @@ class Slider extends React.Component {
 
 Slider.defaultProps = {
     coloredRail: true,
-    collisionsEnabled: true
+    collisions: true
 }
 
 export default Slider;

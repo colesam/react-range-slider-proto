@@ -55,10 +55,9 @@ export default function App() {
                         { position: 100, type: 'major', snapToThreshold: 3 },
                     ]}
                     coloredRail={coloredRailEnabled}
-                    collisionsEnabled={collisionsEnabled}
+                    collisions={collisionsEnabled}
                     onChange={setValues}
                 />
-
                 <div className="SliderContainer_body">
                     <hr/>
 
