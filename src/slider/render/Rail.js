@@ -3,7 +3,7 @@ import React from 'react';
 function Rail({ coloredRailPositions }) {
     let coloredRail = null;
 
-    if (coloredRailPositions !== null) {
+    if (Array.isArray(coloredRailPositions) && coloredRailPositions.length === 2) {
         const [ startPos, endPos ] = coloredRailPositions;
         coloredRail = (
             <div className="Slider_rail Slider_rail-colored"

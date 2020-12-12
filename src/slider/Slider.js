@@ -2,13 +2,14 @@ import React from 'react';
 import Handle from './render/Handle';
 import Knob from "./render/Knob";
 import Rail from "./render/Rail";
-import {sortAsc} from './utils';
+import {sortAsc, valueToPosition, positionToValue} from '../utils';
 
-class FullSlider extends React.Component {
+class Slider extends React.Component {
+
     constructor(props) {
         super(props);
         this.ref = React.createRef();
-        this.state = { activeHandle: null };
+        this.state = { activeHandleIndex: null };
     }
 
     // Lifecycle hooks
@@ -40,29 +41,22 @@ class FullSlider extends React.Component {
     }
 
     /**
-     * Length in pixels of the slider component.
+     * The length of this slider component in pixels.
      * @returns {number}
      */
-    get sliderLength() {
+    get sliderPixelLength() {
         const { left, right } = this.sliderCoordinates;
         return right - left;
     }
 
     /**
-     * The distance between this slider's minimum and maximum values.
-     * @returns {number}
-     */
-    get rangeSize() {
-        return this.props.max - this.props.min;
-    }
-
-    /**
-     * The handle's positions are a percentage distance down the rail (using css `left: X%`). Need to scale the value
+     * The handle's positions are a percentage distance down the rail (using css `left: X%`). Need to scale the values
      * from a range of min/max to 0/1 and multiply by 100 for a percent.
      * @returns {number[]}
      */
     get handlePositions() {
-        return this.props.value.map(val => ((val - this.props.min) / this.rangeSize * 100));
+        const { values, min, max } = this.props;
+        return values.map(val => valueToPosition(val, min, max));
     }
 
     /**
@@ -99,6 +93,7 @@ class FullSlider extends React.Component {
     // Component methods
 
     /**
+     * Determine if a knob is a part of the colored section of a rail and needs to be colored also.
      * @param {number} position
      * @returns {boolean}
      */
@@ -115,7 +110,7 @@ class FullSlider extends React.Component {
     /**
      * Loop over snapping positions/thresholds to determine if a position needs to snap to a new position.
      * @param {number} position
-     * @returns {number} - new position
+     * @returns {number} - the new position after snapping
      */
     calculateSnappedPosition(position) {
         this.snapToThresholds.forEach(([ snapToPos, threshold ]) => {
@@ -134,44 +129,44 @@ class FullSlider extends React.Component {
      * @param {number} cursorX - the x position (in pixels) of the mouse
      */
     drag(cursorX) {
-        if (this.state.activeHandle !== null) {
-            const { value, min, max, collisionsEnabled, onChange } = this.props;
+        const { activeHandleIndex } = this.state;
+
+        if (activeHandleIndex !== null) {
+            const { values, min, max, collisionsEnabled, onChange } = this.props;
 
             // Convert the cursor's X position from pixels to a percentage of the slider's width
-            let currentPosition = (cursorX - this.sliderCoordinates.left) / this.sliderLength * 100;
+            let cursorPosition = (cursorX - this.sliderCoordinates.left) / this.sliderPixelLength * 100;
+            cursorPosition = this.calculateSnappedPosition(cursorPosition);
 
-            currentPosition = this.calculateSnappedPosition(currentPosition);
-
-            let handleValue;
-
-            if (currentPosition < 0) {
+            let cursorValue;
+            if (cursorPosition < 0) {
                 // If slider goes below 0%, set it to min
-                handleValue = min;
-            } else if (currentPosition > 100) {
+                cursorValue = min;
+            } else if (cursorPosition > 100) {
                 // If slider exceeds 100%, set it to the max
-                handleValue = max;
+                cursorValue = max;
             } else {
                 // Convert from percentage-based position back to true value
-                handleValue = ((currentPosition / 100) * this.rangeSize) + min;
+                cursorValue = positionToValue(cursorPosition, min, max);
             }
 
-            let newValue = [...value];
+            let newValues = [...values];
+            newValues[activeHandleIndex] = cursorValue;
 
-            newValue[this.state.activeHandle] = handleValue;
-
+            // If collisions are enabled, sort the values in ascending order
             if (collisionsEnabled) {
-                newValue = sortAsc(newValue);
+                newValues = sortAsc(newValues);
             }
 
-            onChange(newValue);
+            onChange(newValues);
         }
     }
 
     // Event handlers
 
-    setActiveHandle = handleIndex => this.setState({ activeHandle: handleIndex });
+    setActiveHandle = handleIndex => this.setState({ activeHandleIndex: handleIndex });
 
-    resetActiveHandle = () => this.setState({ activeHandle: null });
+    resetActiveHandle = () => this.setState({ activeHandleIndex: null });
 
     mouseMoveHandler = e => this.drag(e.pageX);
 
@@ -185,8 +180,9 @@ class FullSlider extends React.Component {
         const handles = this.handlePositions.map((position, handleIndex) => (
             <Handle
                 position={position}
-                isActive={this.state.activeHandle === handleIndex}
-                onClickStart={() => this.setActiveHandle(handleIndex)}
+                isActive={this.state.activeHandleIndex === handleIndex}
+                onMouseDown={() => this.setActiveHandle(handleIndex)}
+                onTouchStart={() => this.setActiveHandle(handleIndex)}
                 key={`handle_${handleIndex}`}
             />
         ));
@@ -210,9 +206,9 @@ class FullSlider extends React.Component {
     }
 }
 
-FullSlider.defaultProps = {
+Slider.defaultProps = {
     coloredRail: true,
     collisionsEnabled: true
 }
 
-export default FullSlider;
+export default Slider;
