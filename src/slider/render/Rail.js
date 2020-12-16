@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Rail({ coloredRailPositions }) {
+const Rail = ({ coloredRailPositions }) => {
     let coloredRail = null;
 
     if (Array.isArray(coloredRailPositions) && coloredRailPositions.length === 2) {
@@ -17,6 +17,6 @@ function Rail({ coloredRailPositions }) {
             {coloredRail}
         </div>
     );
-}
+};
 
 export default Rail;

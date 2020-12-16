@@ -48,11 +48,11 @@ export default function App() {
                     min={min}
                     max={max}
                     knobs={[
-                        { position: 0, type: 'major', snapToThreshold: 3 },
-                        { position: 25, type: 'minor', snapToThreshold: 1 },
-                        { position: 50, type: 'normal', snapToThreshold: 1 },
-                        { position: 75, type: 'minor', snapToThreshold: 1 },
-                        { position: 100, type: 'major', snapToThreshold: 3 },
+                        // { position: 0, type: 'major', snapToThreshold: 3 },
+                        // { position: 25, type: 'minor', snapToThreshold: 1 },
+                        // { position: 50, type: 'normal', snapToThreshold: 1 },
+                        // { position: 75, type: 'minor', snapToThreshold: 1 },
+                        // { position: 100, type: 'major', snapToThreshold: 3 },
                     ]}
                     coloredRail={coloredRailEnabled}
                     collisions={collisionsEnabled}

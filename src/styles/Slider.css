@@ -6,7 +6,6 @@
 
 .Slider {
     display: flex;
-    justify-content: stretch;
     align-items: center;
     position: relative;
     width: 100%;

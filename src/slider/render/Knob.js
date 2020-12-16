@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Knob({ position, type, isColored }) {
+const Knob = ({ position, type, isColored }) => {
     const modifierClasses = [
         `Slider_knob-${type}`,
         (isColored) ? 'Slider_knob-colored' : ''
@@ -11,6 +11,6 @@ function Knob({ position, type, isColored }) {
              style={{ left: `${position}%` }}
         > </div>
     );
-}
+};
 
 export default Knob;
