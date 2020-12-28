@@ -7,8 +7,9 @@ const Knob = ({ position, type, isColored }) => {
     ].join(' ');
 
     return (
-        <div className={`Slider_knob ${modifierClasses}`}
-             style={{ left: `${position}%` }}
+        <div
+            className={`Slider_knob ${modifierClasses}`}
+            style={{ left: `${position}%` }}
         > </div>
     );
 };

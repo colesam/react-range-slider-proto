@@ -6,8 +6,9 @@ const Rail = ({ coloredRailPositions }) => {
     if (Array.isArray(coloredRailPositions) && coloredRailPositions.length === 2) {
         const [ startPos, endPos ] = coloredRailPositions;
         coloredRail = (
-            <div className="Slider_rail Slider_rail-colored"
-                 style={{ left: `${startPos}%`, right: `${100 - endPos}%` }}
+            <div
+                className="Slider_rail Slider_rail-colored"
+                style={{ left: `${startPos}%`, right: `${100 - endPos}%` }}
             > </div>
         );
     }
