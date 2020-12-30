@@ -17,15 +17,15 @@ class Slider extends React.Component {
     componentDidMount() {
         document.addEventListener('mousemove', this.mouseMoveHandler);
         document.addEventListener('touchmove', this.touchMoveHandler);
-        document.addEventListener('mouseup', this.resetActiveHandle);
-        document.addEventListener('touchend', this.resetActiveHandle);
+        document.addEventListener('mouseup', this.resetActiveHandleIndex);
+        document.addEventListener('touchend', this.resetActiveHandleIndex);
     }
 
     componentWillUnmount() {
         document.removeEventListener('mousemove', this.mouseMoveHandler);
         document.removeEventListener('touchmove', this.touchMoveHandler);
-        document.removeEventListener('mouseup', this.resetActiveHandle);
-        document.removeEventListener('touchend', this.resetActiveHandle);
+        document.removeEventListener('mouseup', this.resetActiveHandleIndex);
+        document.removeEventListener('touchend', this.resetActiveHandleIndex);
     }
 
     // Component getters
@@ -80,7 +80,7 @@ class Slider extends React.Component {
     }
 
     /**
-     * Returns an array of tuples representing positions that can be snapped to (e.g. 25%) and the distance in
+     * An array of tuples representing positions that can be snapped to (e.g. 25%) and the distance in
      * percentage points that a handle needs to be away from that position in order to snap.
      * @returns {number[][]} - [ position, snapToThreshold ]
      */
@@ -164,9 +164,9 @@ class Slider extends React.Component {
 
     // Event handlers
 
-    setActiveHandle = handleIndex => this.setState({ activeHandleIndex: handleIndex });
+    setActiveHandleIndex = handleIndex => this.setState({ activeHandleIndex: handleIndex });
 
-    resetActiveHandle = () => this.setState({ activeHandleIndex: null });
+    resetActiveHandleIndex = () => this.setState({ activeHandleIndex: null });
 
     mouseMoveHandler = e => this.drag(e.pageX);
 
@@ -181,8 +181,8 @@ class Slider extends React.Component {
             <Handle
                 position={position}
                 isActive={this.state.activeHandleIndex === handleIndex}
-                onMouseDown={() => this.setActiveHandle(handleIndex)}
-                onTouchStart={() => this.setActiveHandle(handleIndex)}
+                onMouseDown={() => this.setActiveHandleIndex(handleIndex)}
+                onTouchStart={() => this.setActiveHandleIndex(handleIndex)}
                 key={`handle_${handleIndex}`}
             />
         ));
