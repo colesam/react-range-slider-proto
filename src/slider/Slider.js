@@ -17,15 +17,15 @@ class Slider extends React.Component {
     componentDidMount() {
         document.addEventListener('mousemove', this.mouseMoveHandler);
         document.addEventListener('touchmove', this.touchMoveHandler);
-        document.addEventListener('mouseup', this.resetActiveHandleIndex);
-        document.addEventListener('touchend', this.resetActiveHandleIndex);
+        document.addEventListener('mouseup', this.clickEndHandler);
+        document.addEventListener('touchend', this.clickEndHandler);
     }
 
     componentWillUnmount() {
         document.removeEventListener('mousemove', this.mouseMoveHandler);
         document.removeEventListener('touchmove', this.touchMoveHandler);
-        document.removeEventListener('mouseup', this.resetActiveHandleIndex);
-        document.removeEventListener('touchend', this.resetActiveHandleIndex);
+        document.removeEventListener('mouseup', this.clickEndHandler);
+        document.removeEventListener('touchend', this.clickEndHandler);
     }
 
     // Component getters
@@ -162,11 +162,19 @@ class Slider extends React.Component {
         }
     }
 
+    /**
+     * @param {number|null} handleIndex
+     */
+    setActiveHandleIndex(handleIndex) {
+        this.setState({ activeHandleIndex: handleIndex });
+    }
+
     // Event handlers
 
-    setActiveHandleIndex = handleIndex => this.setState({ activeHandleIndex: handleIndex });
-
-    resetActiveHandleIndex = () => this.setState({ activeHandleIndex: null });
+    /**
+     * Event handler for both `mouseup` and `touchend`.
+     */
+    clickEndHandler = () => this.setActiveHandleIndex(null);
 
     mouseMoveHandler = e => this.drag(e.pageX);
 

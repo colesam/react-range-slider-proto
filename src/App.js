@@ -43,21 +43,23 @@ export default function App() {
         <div className="Demo Demo-full">
             <div className="SliderContainer">
                 <h1 className="SliderContainer_header">Demo:</h1>
+
                 <Slider
                     values={values}
                     min={min}
                     max={max}
                     knobs={[
-                        // { position: 0, type: 'major', snapToThreshold: 3 },
-                        // { position: 25, type: 'minor', snapToThreshold: 1 },
-                        // { position: 50, type: 'normal', snapToThreshold: 1 },
-                        // { position: 75, type: 'minor', snapToThreshold: 1 },
-                        // { position: 100, type: 'major', snapToThreshold: 3 },
+                        { position: 0, type: 'major', snapToThreshold: 3 },
+                        { position: 25, type: 'minor', snapToThreshold: 1 },
+                        { position: 50, type: 'normal', snapToThreshold: 1 },
+                        { position: 75, type: 'minor', snapToThreshold: 1 },
+                        { position: 100, type: 'major', snapToThreshold: 3 },
                     ]}
                     coloredRail={coloredRailEnabled}
                     collisions={collisionsEnabled}
                     onChange={setValues}
                 />
+
                 <div className="SliderContainer_body">
                     <hr/>
 
