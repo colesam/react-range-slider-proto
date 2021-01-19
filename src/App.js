@@ -55,15 +55,16 @@ export default function App() {
                         { position: 75, type: 'minor', snapToThreshold: 1 },
                         { position: 100, type: 'major', snapToThreshold: 3 },
                     ]}
-                    coloredRail={coloredRailEnabled}
-                    collisions={collisionsEnabled}
+                    coloredRailEnabled={coloredRailEnabled}
+                    collisionsEnabled={collisionsEnabled}
+                    snapToEnabled={snapToEnabled}
                     onChange={setValues}
                 />
 
                 <div className="SliderContainer_body">
                     <hr/>
 
-                    <div className="mb-10"><b>value</b> = [</div>
+                    <div className="mb-10"><b>values</b> = [</div>
                     {valueInputs}
                     <div className="mb-10">]</div>
 

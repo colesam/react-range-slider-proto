@@ -64,7 +64,7 @@ class Slider extends React.Component {
      * @returns {number[]|null} - [ startPos, endPos ]
      */
     get coloredRailPositions() {
-        if (!this.props.coloredRail || this.handlePositions.length < 1) {
+        if (!this.props.coloredRailEnabled || this.handlePositions.length < 1) {
             return null;
         }
 
@@ -132,11 +132,21 @@ class Slider extends React.Component {
         const { activeHandleIndex } = this.state;
 
         if (activeHandleIndex !== null) {
-            const { values, min, max, collisions, onChange } = this.props;
+            const {
+                values,
+                min,
+                max,
+                collisionsEnabled,
+                snapToEnabled,
+                onChange
+            } = this.props;
 
             // Convert the cursor's X position from pixels to a percentage of the slider's width
             let cursorPosition = (cursorX - this.sliderCoordinates.left) / this.sliderPixelLength * 100;
-            cursorPosition = this.calculateSnappedPosition(cursorPosition);
+
+            if (snapToEnabled) {
+                cursorPosition = this.calculateSnappedPosition(cursorPosition);
+            }
 
             let cursorValue;
             if (cursorPosition < 0) {
@@ -150,11 +160,11 @@ class Slider extends React.Component {
                 cursorValue = positionToValue(cursorPosition, min, max);
             }
 
-            let newValues = [...values];
+            let newValues = [ ...values ];
             newValues[activeHandleIndex] = cursorValue;
 
             // If collisions are enabled, sort the values in ascending order
-            if (collisions) {
+            if (collisionsEnabled) {
                 newValues = sortAsc(newValues);
             }
 
@@ -215,8 +225,9 @@ class Slider extends React.Component {
 }
 
 Slider.defaultProps = {
-    coloredRail: true,
-    collisions: true
+    coloredRailEnabled: true,
+    collisionsEnabled: true,
+    snapToEnabled: true,
 }
 
 export default Slider;
