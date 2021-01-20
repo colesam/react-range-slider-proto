@@ -50,8 +50,9 @@ class Slider extends React.Component {
     }
 
     /**
-     * The handle's positions are a percentage distance down the rail (using css `left: X%`). Need to scale the values
-     * from a range of min/max to 0/1 and multiply by 100 for a percent.
+     * The handle's positions are a percentage distance down the rail
+     * (using css `left: X%`). Need to scale the values from a range of min/max
+     * to 0/1 and multiply by 100 for a percent.
      * @returns {number[]}
      */
     get handlePositions() {
