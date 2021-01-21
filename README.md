@@ -1,6 +1,8 @@
 # React Multi-handled Range Slider Prototype
 
-In the project root, you can run `npm start` to get a demo on `localhost:3000`.
+Working demo: https://colesam.github.io/react-range-slider-proto/
+
+For a local instance you can run `npm start` in the project's root to get a demo on `localhost:3000`.
 
 ## Project structure
 
