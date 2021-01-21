@@ -2,14 +2,14 @@ import React, {useState} from 'react';
 import Slider from "./slider/Slider";
 
 export default function App() {
-    const min = 50;
-    const max = 150;
 
     // State hooks
-    const [values, setValues] = useState([ 50, 100 ]);
-    const [coloredRailEnabled, setColoredRailEnabled] = useState(true);
-    const [snapToEnabled, setSnapToEnabled] = useState(true);
-    const [collisionsEnabled, setCollisionsEnabled] = useState(true);
+    const [ values, setValues ] = useState([ 25, 75 ]);
+    const [ min, setMin ] = useState(0);
+    const [ max, setMax ] = useState(100);
+    const [ coloredRailEnabled, setColoredRailEnabled ] = useState(true);
+    const [ snapToEnabled, setSnapToEnabled ] = useState(false);
+    const [ collisionsEnabled, setCollisionsEnabled ] = useState(false);
 
     // Event handlers
     const valueChangeHandler = (newValue, index) => {
@@ -64,11 +64,31 @@ export default function App() {
                 <div className="SliderContainer_body">
                     <hr/>
 
+                    <div className="mb-20">
+                        <b>min</b> =
+                        <input
+                            type="text"
+                            style={{ width: 100, marginLeft: '10px' }}
+                            value={min}
+                            onChange={e => setMin(parseFloat(e.target.value))}
+                        />
+                    </div>
+
+                    <div className="mb-20">
+                        <b>max</b> =
+                        <input
+                            type="text"
+                            style={{ width: 100, marginLeft: '10px' }}
+                            value={max}
+                            onChange={e => setMax(parseFloat(e.target.value))}
+                        />
+                    </div>
+
                     <div className="mb-10"><b>values</b> = [</div>
                     {valueInputs}
-                    <div className="mb-10">]</div>
+                    <div className="mb-20">]</div>
 
-                    <div className="mb-10">
+                    <div className="mb-20">
                         <button style={{ marginRight: '10px' }} onClick={addValueHandler}>Add Value</button>
                         <button onClick={removeValueHandler}>Remove Value</button>
                     </div>
