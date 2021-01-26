@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/react-range-slider-proto/static/css/main.d81307c8.chunk.css",
-    "main.js": "/react-range-slider-proto/static/js/main.46de4d18.chunk.js",
-    "main.js.map": "/react-range-slider-proto/static/js/main.46de4d18.chunk.js.map",
+    "main.css": "/react-range-slider-proto/static/css/main.e9ba7570.chunk.css",
+    "main.js": "/react-range-slider-proto/static/js/main.b67b3e23.chunk.js",
+    "main.js.map": "/react-range-slider-proto/static/js/main.b67b3e23.chunk.js.map",
     "runtime-main.js": "/react-range-slider-proto/static/js/runtime-main.5f5eab0e.js",
     "runtime-main.js.map": "/react-range-slider-proto/static/js/runtime-main.5f5eab0e.js.map",
     "static/js/2.67db87ec.chunk.js": "/react-range-slider-proto/static/js/2.67db87ec.chunk.js",
     "static/js/2.67db87ec.chunk.js.map": "/react-range-slider-proto/static/js/2.67db87ec.chunk.js.map",
     "index.html": "/react-range-slider-proto/index.html",
-    "static/css/main.d81307c8.chunk.css.map": "/react-range-slider-proto/static/css/main.d81307c8.chunk.css.map",
+    "static/css/main.e9ba7570.chunk.css.map": "/react-range-slider-proto/static/css/main.e9ba7570.chunk.css.map",
     "static/js/2.67db87ec.chunk.js.LICENSE.txt": "/react-range-slider-proto/static/js/2.67db87ec.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.5f5eab0e.js",
     "static/js/2.67db87ec.chunk.js",
-    "static/css/main.d81307c8.chunk.css",
-    "static/js/main.46de4d18.chunk.js"
+    "static/css/main.e9ba7570.chunk.css",
+    "static/js/main.b67b3e23.chunk.js"
   ]
 }
