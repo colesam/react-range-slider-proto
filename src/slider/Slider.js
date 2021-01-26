@@ -57,7 +57,15 @@ class Slider extends React.Component {
      */
     get handlePositions() {
         const { values, min, max } = this.props;
-        return values.map(val => valueToPosition(val, min, max));
+        return values.map(val => {
+            // These checks ensure handles never fly off the rails
+            if (val > max)
+                return 100; // Max position
+            else if (val < min)
+                return 0; // Min position
+            else
+                return valueToPosition(val, min, max);
+        });
     }
 
     /**

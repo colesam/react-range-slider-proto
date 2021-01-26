@@ -6,7 +6,7 @@ For a local instance you can run `npm start` in the project's root to get a demo
 
 ## Project structure
 
-- `src/App.js` - component containing the code that runs a demo of the prototype, but _no core logic_
+- `src/App.js` - component containing throwaway code that runs a demo of the prototype, but _no core logic_
 
 - `src/Slider.js` - component containing nearly all the logic for the slider component
 
