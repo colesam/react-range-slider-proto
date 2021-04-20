@@ -4,6 +4,8 @@ Working demo: https://colesam.github.io/react-range-slider-proto/
 
 For a local instance you can run `npm start` in the project's root to get a demo on `localhost:3000`.
 
+See [this article](https://objectpartners.com/2021/02/16/how-to-make-a-multi-handled-range-input/) for an explanation of how this slider works.
+
 ## Project structure
 
 - `src/App.js` - component containing throwaway code that runs a demo of the prototype, but _no core logic_
